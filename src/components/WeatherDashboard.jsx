@@ -1,19 +1,13 @@
 import { useState } from 'react'
 import Search from './Search'
-import { useQuery } from '@tanstack/react-query'
-import { fetchWeather } from '../service/WeatherApi'
+import { useWeather } from '../hooks/useWeather'
 
 const WeatherDashboard = () => {
 
     const [city, setCity] = useState('')
     const [submittedCity, setSubmittedCity] = useState('')
 
-    const { isFetching, isSuccess, isError, data} = useQuery({
-        queryKey: ['weather', submittedCity],
-        queryFn: () => fetchWeather(submittedCity),
-        enabled: !!submittedCity,
-        refetchOnWindowFocus: false
-    })
+    const { isFetching, isSuccess, isError, data} = useWeather(submittedCity)
 
     const handleSubmit = (e) => {
         e.preventDefault()
